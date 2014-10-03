@@ -1,0 +1,32 @@
+
+<h1>URL: <a href="<%= @post.url %>"><%= @post.title %></a></h1>
+<h3>Author: <%= @post.author.name %></h3>
+content:
+<table border="100">
+  <tr><td><p><%= @post.content %></p></td></tr>
+</table>
+<% @post.comments.select {|c| c.parent_comment_id.nil? }.each do |big_comment| %>
+ <%= big_comment.content %>
+  <% nested_comments(big_comment) %>
+<% end %>
+
+<br>
+<a href="<%= sub_url(@post.sub) %>">back to all post</a>
+
+<br><br>
+<% if current_user.id == @post.author_id %>
+<form action="<%= sub_post_new_xpost_url(sub_id: @post.sub.id, post_id: @post.id) %>" method="GET">
+  <input type="submit" value="make crossxpost">
+</form>
+
+<form action="<%= edit_sub_post_url(sub_id: @post.sub.id, id: @post.id) %>" method="GET">
+  <input type="submit" value="edit post">
+</form>
+
+<form action="<%= sub_post_url(sub_id: params[:sub_id], id: params[:id]) %>" method="POST">
+  <%= form_auth %>
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="delete post">
+</form>
+<% end %>
+

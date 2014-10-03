@@ -1,0 +1,11 @@
+Check out all the subs!
+
+<br><br>
+<% Sub.all.each do |sub| %>
+
+  <li style="text-indent: 50px"><a href="<%= sub_url(sub) %>" ><%= sub.title %></a></li>
+
+<% end %>
+
+<br><br>
+<a href="<%= new_sub_url %>">Create a new sub!</a>

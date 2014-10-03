@@ -1,0 +1,31 @@
+<% title = @post.persisted? ? "Edit #{@post.title}" : "Create new post" %>
+<% submit_thing = @post.persisted? ? "Edit" : "Create" %>
+<% form_method = @post.persisted? ? "PATCH" : "POST" %>
+<% action_url = @post.persisted? ? sub_post_url(id: @post.id, sub_id: params[:sub_id])  : sub_posts_url  %>
+
+<h1><%= title %></h1>
+
+<form action="<%= action_url %>" method="POST">
+  <%= form_auth %>
+
+  <input type="hidden" name="_method" value="<%= form_method %>">
+  <label for="post_title">Title: </label>
+  <input type="text" id="post_title" name="post[title]" value="<%= @post.title %>">
+
+  <br>
+  <label for="post_url">URL: </label>
+  <input type="text" id="post_url" name="post[url]" value="<%= @post.url %>">
+  <br>
+
+  <label for="post_content">Content: </label>
+  <textarea name="post[content]" id="post_content"
+  ><%= @post.content  %></textarea>
+  <br>
+  <br>
+
+  <input type="submit" value="<%= submit_thing %>">
+
+</form>
+
+<a href="<%= sub_url(params[:sub_id]) %>"
+  >Back to <%= Sub.find(params[:sub_id]).title %></a>

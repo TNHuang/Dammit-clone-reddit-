@@ -1,0 +1,23 @@
+<h1>Make crossxpost</h1>
+
+<h1>URL: <%= @post.title %></h1>
+<h3>Author: <%= @post.author.name %></h3>
+content:
+<table border="100">
+  <tr><td><p><%= @post.content %></p></td></tr>
+</table>
+
+<br>
+<a href="<%= sub_url(@post.sub) %>">back to all post</a>
+
+<br><br>
+<% if current_user.id == @post.author_id %>
+<form action="<%= sub_post_xpost_url(sub_id: @post.sub.id, post_id: @post.id) %>" method="POST">
+  <%= form_auth %>
+
+  <label for="sub_to_xpost">sub to crossxpost to</label>
+  <input type="text" id="sub_to_xpost" name="x_post[sub]">
+  <input type="submit" value="crossxpost!">
+</form>
+
+<% end %>
