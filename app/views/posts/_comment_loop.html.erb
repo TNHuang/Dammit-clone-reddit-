@@ -1,0 +1,24 @@
+<% current_comments.each do |current_comment| %>
+	<%= "------" * counter %>
+	<%= current_comment.author.name%> says:
+	<%= current_comment.content %>
+
+	<% indent_val = (35 * counter).to_s %>
+  
+	<% if params[:reply_id].to_i == current_comment.id %>
+	  	<form style="margin:5px 0 0 <%= indent_val %>px;" action="<%= sub_post_comments_url(post_id: params[:id], parent_comment_id: current_comment.id) %>" method="POST">
+	 		<%= form_auth %>
+	 		<label for="comment_content">Make comment!</label><br>
+	 		<textarea name="comment[content]" id="comment_content"></textarea><br>
+	 		<input type="submit" value="comment">
+	 	</form>
+	 <% else %>
+	  	<form action="<%= sub_post_url %>" method="GET">
+	  		<input type="hidden" name="reply_id" value="<%= current_comment.id %>">
+	  		<input style="margin:5px 0 0 <%= indent_val %>px;" type="submit" value="reply">
+	  	</form>
+	<% end %>
+	<br>
+
+	<%= render "comment_loop", current_comments: current_comment.comments, counter: counter + 1 %>
+<% end %>

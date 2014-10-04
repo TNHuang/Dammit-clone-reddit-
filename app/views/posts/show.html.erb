@@ -5,16 +5,27 @@ content:
 <table border="100">
   <tr><td><p><%= @post.content %></p></td></tr>
 </table>
-<% @post.comments.select {|c| c.parent_comment_id.nil? }.each do |big_comment| %>
- <%= big_comment.content %>
-  <% nested_comments(big_comment) %>
+<% if current_user %>
+<br><br>
+<form action="<%= sub_post_comments_url(post_id: params[:id]) %>" method="POST">
+ 	<%= form_auth %>
+ 	<label for="comment_content">Make comment!</label><br>
+ 	<textarea name="comment[content]" id="comment_content"></textarea><br>
+ 	<input type="submit" value="comment">
+ </form>
+ <br>
+ <% else %>
+ <br>
 <% end %>
+
+<% current_comments = @post.comments.select {|c| c.parent_comment_id.nil? } %>
+<%= render "comment_loop", current_comments: current_comments, counter: 0 %>
 
 <br>
 <a href="<%= sub_url(@post.sub) %>">back to all post</a>
 
 <br><br>
-<% if current_user.id == @post.author_id %>
+<% if current_user && current_user.id == @post.author_id %>
 <form action="<%= sub_post_new_xpost_url(sub_id: @post.sub.id, post_id: @post.id) %>" method="GET">
   <input type="submit" value="make crossxpost">
 </form>

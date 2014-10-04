@@ -15,11 +15,11 @@
 # gem 'pg'
 #
 development:
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
   database: RedditClone_development
   host: localhost
-  username: appacademy
+  username: ghorothizo
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have

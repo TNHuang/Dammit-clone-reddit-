@@ -7,6 +7,10 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
+    url = @post.url
+
+    @post.url = "http://" + url unless (url[0..6] == "http://") || (url[0..7] == "https://")
+
     if @post.save
       PostSub.create(post_id: @post.id, sub_id: params[:sub_id])
       redirect_to sub_post_url(id: @post.id)
@@ -19,9 +23,6 @@ class PostsController < ApplicationController
   def show
     @post_sub = PostSub.find_by(post_id: params[:id], sub_id: params[:sub_id])
     @post = Post.find(@post_sub.post_id)
-    @url = @post.url
-
-    @post.url = "http://" + @url unless @url[0..6] == "http://"
 
     render :show
   end

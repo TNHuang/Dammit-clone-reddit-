@@ -13,8 +13,8 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    comment_params = params.require(:comment).permit(:content, :parent_comment_id)
-    comment_params.merge(sub_id: params[:sub_id], post_id: params[:post_id])
+    comment_params = params.require(:comment).permit(:content)
+    comment_params.merge(post_id: params[:post_id], parent_comment_id: params[:parent_comment_id])
   end
 
 end

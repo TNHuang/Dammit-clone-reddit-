@@ -17,9 +17,6 @@
     <% if post_sub.sub_id == @sub.id %>
       <% post = post_sub.post %>
 
-      <% url = post.url %>
-      <% post.url = "http://" + url unless url[0..6] == "http://" %>
-
         <li><a href="<%= post.url %>"><%= post.title %></a></li>
         &nbsp&nbsp&nbsp<a href="<%= sub_post_url(sub_id: @sub.id, id: post.id)
          %>">comments</a>
@@ -31,15 +28,16 @@
   </ul>
 <% end %>
 
-
-<a href="<%= new_sub_post_url(sub_id: @sub.id) %>">make new post!</a>
+<% if current_user %>
+  <a href="<%= new_sub_post_url(sub_id: @sub.id) %>">make new post!</a>
+<% end %>
 
 <br>
 <a href="<%= users_url %>">back to all subs</a>
 <br>
 <br>
 
-<% if current_user.id == @sub.moderator_id %>
+<% if current_user && (current_user.id == @sub.moderator_id) %>
   <form action="<%= edit_sub_url(@sub) %>" method="GET">
     <%= form_auth %>
     <input type="submit" value="Edit sub">

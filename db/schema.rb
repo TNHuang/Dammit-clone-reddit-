@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20141003214711) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "comments", force: true do |t|
     t.text     "content",           null: false
     t.integer  "author_id",         null: false
@@ -25,9 +22,9 @@ ActiveRecord::Schema.define(version: 20141003214711) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["author_id"], name: "index_comments_on_author_id", using: :btree
-  add_index "comments", ["parent_comment_id"], name: "index_comments_on_parent_comment_id", using: :btree
-  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+  add_index "comments", ["author_id"], name: "index_comments_on_author_id"
+  add_index "comments", ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id"
 
   create_table "post_subs", force: true do |t|
     t.integer  "post_id",    null: false
@@ -36,7 +33,7 @@ ActiveRecord::Schema.define(version: 20141003214711) do
     t.datetime "updated_at"
   end
 
-  add_index "post_subs", ["post_id", "sub_id"], name: "index_post_subs_on_post_id_and_sub_id", unique: true, using: :btree
+  add_index "post_subs", ["post_id", "sub_id"], name: "index_post_subs_on_post_id_and_sub_id", unique: true
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -48,8 +45,8 @@ ActiveRecord::Schema.define(version: 20141003214711) do
     t.integer  "author_id",  null: false
   end
 
-  add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree
-  add_index "posts", ["sub_id"], name: "index_posts_on_sub_id", using: :btree
+  add_index "posts", ["author_id"], name: "index_posts_on_author_id"
+  add_index "posts", ["sub_id"], name: "index_posts_on_sub_id"
 
   create_table "subs", force: true do |t|
     t.string   "title",        null: false
@@ -59,7 +56,7 @@ ActiveRecord::Schema.define(version: 20141003214711) do
     t.datetime "updated_at"
   end
 
-  add_index "subs", ["moderator_id"], name: "index_subs_on_moderator_id", using: :btree
+  add_index "subs", ["moderator_id"], name: "index_subs_on_moderator_id"
 
   create_table "users", force: true do |t|
     t.string   "name",                             null: false
@@ -72,6 +69,6 @@ ActiveRecord::Schema.define(version: 20141003214711) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+  add_index "users", ["name"], name: "index_users_on_name", unique: true
 
 end

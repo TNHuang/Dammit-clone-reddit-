@@ -8,4 +8,6 @@ Check out all the subs!
 <% end %>
 
 <br><br>
-<a href="<%= new_sub_url %>">Create a new sub!</a>
+<% if current_user %>
+	<a href="<%= new_sub_url %>">Create a new sub!</a>
+<% end %>
